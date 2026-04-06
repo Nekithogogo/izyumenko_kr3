@@ -1,15 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заметки PWA</title>
-    
-    <!-- Подключение манифеста -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#4285f4">
-    
-    <!-- Иконки -->
     <link rel="icon" href="icons/favicon-64x64.png" sizes="64x64" type="image/png">
-    <link rel="apple-touch-icon" href="icons/favicon-128x128.png">
-    
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
 </head>
+<body>
+    <h1>Заметки + WebSocket + Push</h1>
+    <form id="note-form" class="row">
+        <input class="col-9" type="text" id="note-input" placeholder="Введите заметку" required>
+        <button class="col-3" type="submit">Добавить</button>
+    </form>
+    <ul id="notes-list"></ul>
+    
+    <footer class="is-center" style="margin-top: 20px;">
+        <button id="enable-push" class="button success">Включить уведомления</button>
+        <button id="disable-push" class="button error" style="display:none;">Отключить уведомления</button>
+    </footer>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
