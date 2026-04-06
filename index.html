@@ -5,85 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заметки PWA</title>
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#B19CD9">
+    <meta name="theme-color" content="#4285f4">
     <link rel="icon" href="icons/favicon-64x64.png" sizes="64x64" type="image/png">
     <link rel="stylesheet" href="https://unpkg.com/chota@latest">
-    <style>
-        body {
-            background: #F5F0FF;
-            color: #4A4A4A;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        h1 {
-            color: #957DAD;
-            text-align: center;
-        }
-        input {
-            border: 2px solid #B19CD9;
-            border-radius: 5px;
-            padding: 10px;
-        }
-        input:focus {
-            outline: none;
-            border-color: #957DAD;
-            box-shadow: 0 0 5px #B19CD9;
-        }
-        button {
-            background: linear-gradient(135deg, #B19CD9, #957DAD);
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            opacity: 0.9;
-        }
-        #note-form {
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        #notes-list {
-            max-width: 600px;
-            margin: 20px auto;
-            list-style: none;
-            padding: 0;
-        }
-        #notes-list li {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-left: 4px solid #B19CD9;
-            box-shadow: 0 2px 5px rgba(149, 125, 173, 0.2);
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .notification {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: #957DAD;
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(149, 125, 173, 0.4);
-        }
-    </style>
 </head>
 <body>
-    <h1>📝 Мои Заметки</h1>
+    <h1>Заметки + WebSocket + Push</h1>
     <form id="note-form" class="row">
         <input class="col-9" type="text" id="note-input" placeholder="Введите заметку" required>
         <button class="col-3" type="submit">Добавить</button>
     </form>
     <ul id="notes-list"></ul>
     
-    <footer>
-        <button id="enable-push" class="button">🔔 Включить уведомления</button>
-        <button id="disable-push" class="button" style="display:none; background: linear-gradient(135deg, #E57373, #C62828);">🔕 Отключить уведомления</button>
+    <footer class="is-center" style="margin-top: 20px;">
+        <button id="enable-push" class="button success">Включить уведомления</button>
+        <button id="disable-push" class="button error" style="display:none;">Отключить уведомления</button>
     </footer>
 
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
