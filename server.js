@@ -7,8 +7,8 @@ const cors = require('cors');
 const path = require('path');
 
 const vapidKeys = {
-    publicKey: 'ВАШ_ПУБЛИЧНЫЙ_КЛЮЧ',
-    privateKey: 'ВАШ_ПРИВАТНЫЙ_КЛЮЧ'
+    publicKey: 'BD2vEcJBlDp0j_m3pCCbn-6Q4XR88dKdVd7kJMBo-0oSycIaLpSS0ibkli1fTCNLxyWgffHOTjHGZcFKiIA9uzc',
+    privateKey: 'Lkl0fFpW9uH2K0FJGv1yioICfzVYsUqkCU2-yFv6VB0'
 };
 
 webpush.setVapidDetails(

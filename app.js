@@ -20,7 +20,7 @@ async function subscribeToPush() {
         const registration = await navigator.serviceWorker.ready;
         const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array('ВАШ_ПУБЛИЧНЫЙ_VAPID_КЛЮЧ')
+            applicationServerKey: urlBase64ToUint8Array('BD2vEcJBlDp0j_m3pCCbn-6Q4XR88dKdVd7kJMBo-0oSycIaLpSS0ibkli1fTCNLxyWgffHOTjHGZcFKiIA9uzc')
         });
         await fetch('http://localhost:3001/subscribe', {
             method: 'POST',
@@ -75,17 +75,8 @@ form.addEventListener('submit', (e) => {
 socket.on('taskAdded', (task) => {
     console.log('Задача от другого клиента:', task);
     const notification = document.createElement('div');
+    notification.className = 'notification';
     notification.textContent = `Новая задача: ${task.text}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        background: #4285f4;
-        color: white;
-        padding: 1rem;
-        border-radius: 5px;
-        z-index: 1000;
-    `;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 });
