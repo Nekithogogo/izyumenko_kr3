@@ -53,9 +53,9 @@ function loadNotes() {
     list.innerHTML = notes.map(note => `<li>${note.text || note}</li>`).join('');
 }
 
-function addNote(text) {
+function addNote(text, datetime) {
     const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    const newNote = { id: Date.now(), text };
+    const newNote = { id: Date.now(), text, datetime: datetime || '' };
     notes.push(newNote);
     localStorage.setItem('notes', JSON.stringify(notes));
     loadNotes();
