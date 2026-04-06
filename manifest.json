@@ -1,11 +1,11 @@
 {
-    "name": "Мои Заметки",
+    "name": "Мои Заметки PWA",
     "short_name": "Заметки",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#4285f4",
-    "description": "Приложение для заметок с офлайн режимом",
+    "background_color": "#F5F0FF",
+    "theme_color": "#B19CD9",
+    "description": "Приложение для заметок с офлайн режимом и push-уведомлениями",
     "orientation": "portrait-primary",
     "icons": [
         {
