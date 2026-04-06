@@ -3,8 +3,8 @@
     "short_name": "Заметки",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#F5F0FF",
-    "theme_color": "#B19CD9",
+    "background_color": "#ffffff",
+    "theme_color": "#4285f4",
     "description": "Приложение для заметок с офлайн режимом",
     "orientation": "portrait-primary",
     "icons": [

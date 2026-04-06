@@ -53,9 +53,9 @@ function loadNotes() {
     list.innerHTML = notes.map(note => `<li>${note.text || note}</li>`).join('');
 }
 
-function addNote(text) {
+function addNote(text, datetime) {
     const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    const newNote = { id: Date.now(), text };
+    const newNote = { id: Date.now(), text, datetime: datetime || '' };
     notes.push(newNote);
     localStorage.setItem('notes', JSON.stringify(notes));
     loadNotes();
@@ -75,8 +75,17 @@ form.addEventListener('submit', (e) => {
 socket.on('taskAdded', (task) => {
     console.log('Задача от другого клиента:', task);
     const notification = document.createElement('div');
-    notification.className = 'notification';
     notification.textContent = `Новая задача: ${task.text}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: #4285f4;
+        color: white;
+        padding: 1rem;
+        border-radius: 5px;
+        z-index: 1000;
+    `;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 });
