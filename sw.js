@@ -1,8 +1,12 @@
-const CACHE_NAME = 'notes-cache-v1';
+const CACHE_NAME = 'notes-cache-v2';
 const ASSETS = [
     '/',
     '/index.html',
-    '/app.js'
+    '/app.js',
+    '/manifest.json',
+    '/icons/favicon-64x64.png',
+    '/icons/favicon-128x128.png',
+    '/icons/favicon-256x256.png'
 ];
 
 self.addEventListener('install', event => {
