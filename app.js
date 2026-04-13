@@ -1,5 +1,8 @@
 const form = document.getElementById('note-form');
 const input = document.getElementById('note-input');
+const reminderForm = document.getElementById('reminder-form');
+const reminderText = document.getElementById('reminder-text');
+const reminderTime = document.getElementById('reminder-time');
 const list = document.getElementById('notes-list');
 const socket = io('http://localhost:3001');
 
@@ -50,17 +53,40 @@ async function unsubscribeFromPush() {
 
 function loadNotes() {
     const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    list.innerHTML = notes.map(note => `<li>${note.text || note}</li>`).join('');
+    if (notes.length === 0) {
+        list.innerHTML = '<li class="empty-state">Список заметок пуст</li>';
+        return;
+    }
+    list.innerHTML = notes.map(note => {
+        let reminderInfo = '';
+        if (note.reminder) {
+            const date = new Date(note.reminder);
+            reminderInfo = `<div class="note-time">⏰ ${date.toLocaleString()}</div>`;
+        }
+        return `
+            <li>
+                <span class="note-icon">${note.reminder ? '⏰' : '📌'}</span>
+                <div>
+                    <div class="note-text">${note.text}</div>
+                    ${reminderInfo}
+                </div>
+            </li>
+        `;
+    }).join('');
 }
 
-function addNote(text, datetime) {
+function addNote(text, reminderTimestamp = null) {
     const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    const newNote = { id: Date.now(), text, datetime: datetime || '' };
+    const newNote = { id: Date.now(), text, reminder: reminderTimestamp };
     notes.push(newNote);
     localStorage.setItem('notes', JSON.stringify(notes));
     loadNotes();
     
-    socket.emit('newTask', { text, timestamp: Date.now() });
+    if (reminderTimestamp) {
+        socket.emit('newReminder', { id: newNote.id, text, reminderTime: reminderTimestamp });
+    } else {
+        socket.emit('newTask', { text, timestamp: Date.now() });
+    }
 }
 
 form.addEventListener('submit', (e) => {
@@ -72,20 +98,26 @@ form.addEventListener('submit', (e) => {
     }
 });
 
+reminderForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = reminderText.value.trim();
+    const datetime = reminderTime.value;
+    if (text && datetime) {
+        const timestamp = new Date(datetime).getTime();
+        if (timestamp > Date.now()) {
+            addNote(text, timestamp);
+            reminderText.value = '';
+            reminderTime.value = '';
+        } else {
+            alert('Дата напоминания должна быть в будущем');
+        }
+    }
+});
+
 socket.on('taskAdded', (task) => {
-    console.log('Задача от другого клиента:', task);
     const notification = document.createElement('div');
+    notification.className = 'notification';
     notification.textContent = `Новая задача: ${task.text}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        background: #4285f4;
-        color: white;
-        padding: 1rem;
-        border-radius: 5px;
-        z-index: 1000;
-    `;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 });
@@ -110,7 +142,7 @@ if ('serviceWorker' in navigator) {
 
                 enableBtn.addEventListener('click', async () => {
                     if (Notification.permission === 'denied') {
-                        alert('Уведомления запрещены. Разрешите их в настройках браузера.');
+                        alert('Уведомления запрещены.');
                         return;
                     }
                     if (Notification.permission === 'default') {
