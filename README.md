@@ -22,11 +22,11 @@
 
 ## Установка и запуск
 
-### 1. Клонирование репозитория
-```bash
+
+### Клонирование репозитория
 git clone https://github.com/ВАШ_ЛОГИН/izyumenko_kr3.git
 cd izyumenko_kr3
-### 2. Установка зависимостей
+### Установка зависимостей
 npm install
 ### Генерация VAPID-ключей
 npx web-push generate-vapid-keys
